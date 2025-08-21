@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sunset Sandwiches - Jeu de Cuisine</title>
+    <link href="https://fonts.googleapis.com/css2?family=Delius+Swash+Caps&family=Gaegu&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+  
+  <!-- ÉCRAN Renovation boutique  -->
+<div class="intermission-screen hidden">
+  <div class="intermission-content">
+    
+  <div id="congrats-title" class="congrats-title"></div> 
+    <video class="intermission-video" autoplay muted></video>
+    <button class="continue-button">Continuer</button>
+  </div>
+</div>
+  
+    <div class="game-container">
+        <!-- BOUTON SON -->
+        <button class="sound-toggle">🔊</button>
+          <audio id="music-sandwich" loop>
+<source src="https://github.com/BambieStudio/ASSETS-Divers---projets-code-/raw/main/sunsetSandwiches/Ocean%20Dreams.mp3" type="audio/mpeg"></audio>
+            <!-- SFX -->  
+      <audio id="cash-sound">
+  <source src="https://github.com/BambieStudio/ASSETS-Divers---projets-code-/raw/main/sunsetSandwiches/SFX_cash.aac" type="audio/aac">
+</audio>
+      
+        <!-- ÉCRAN D'ACCUEIL -->
+        <div class="welcome-screen">
+          <h1>SUNSET SANDWICHES</h1>
+            <p style="font-size: 1.5rem; color: white; text-shadow: 1px 1px 2px #000;">Aide le vieux Mario à préparer de délicieux sandwiches!</p>
+            <button class="start-button">Commencer</button>
+        </div>
+        
+        <!-- ÉCRAN D'INTRODUCTION -->
+<div class="intro-screen hidden">
+  <div class="shopkeeper-container">
+    <img src="" alt="Vieux Mario" class="shopkeeper" id="mario-img">
+    
+    <div class="dialogue-bubble">
+      <p id="dialogue-text"></p>
+      <button id="next-button">➡️</button>
+    </div>
+    
+    <button class="start-button hidden">C'est parti!</button>
+  </div>
+</div>
+
+        
+        <!-- ÉCRAN DE JEU PRINCIPAL -->
+        <div class="main-game-screen hidden">
+            <!-- COMPTEUR DE PIÈCES -->
+            <div class="money-display">
+                <span>Pièces: </span>
+                <span id="money-counter">0</span>
+            </div>
+            
+<div class="customer">
+    <div class="customer-img">
+        <img src="" alt="Client" id="customer-image">
+        <div class="customer-emoji" id="customer-emoji"></div>
+    </div>
+    <div class="order-bubble">
+        <span>Je voudrais:</span>
+        <span id="order-text">Pain + Mayo + Jambon + Salade</span>
+    </div>
+</div>
+            
+            
+<!-- ZONE DE PRÉPARATION -->
+<div class="preparation-area">
+    <div class="plate" id="sandwich-building-area">
+        <!-- Les ingrédients seront ajoutés ici dynamiquement -->
+
+    </div>
+    <div class="action-buttons">
+        <button class="serve-button">Servir</button>
+        <button class="reset-button">Recommencer</button>
+    </div>
+</div>
+            
+            <!-- PANEL D'INGRÉDIENTS -->
+            <div class="ingredients-panel">
+                <div class="ingredient" data-type="bread-bottom">
+                    <img src="https://raw.githubusercontent.com/BambieStudio/ASSETS-Divers---projets-code-/refs/heads/main/sunsetSandwiches/sand_bunBottom.webp" alt="Pain du bas"> <span class="tooltip">Pain (bas)</span>
+                </div>
+                <div class="ingredient" data-type="mayo">
+                    <img src="https://raw.githubusercontent.com/BambieStudio/ASSETS-Divers---projets-code-/refs/heads/main/sunsetSandwiches/sand_mayo.webp" alt="Mayo"><span class="tooltip">Mayo</span>
+                </div>
+                <div class="ingredient" data-type="ketchup">
+                    <img src="https://raw.githubusercontent.com/BambieStudio/ASSETS-Divers---projets-code-/refs/heads/main/sunsetSandwiches/sand_ketchup.webp" alt="Ketchup"><span class="tooltip">Ketchup</span>
+                </div>
+                <div class="ingredient" data-type="ham">
+                    <img src="https://raw.githubusercontent.com/BambieStudio/ASSETS-Divers---projets-code-/refs/heads/main/sunsetSandwiches/sand_jambon.webp" alt="Jambon"><span class="tooltip">Jambon</span>
+                </div>
+                <div class="ingredient" data-type="bacon">
+                    <img src="https://raw.githubusercontent.com/BambieStudio/ASSETS-Divers---projets-code-/refs/heads/main/sunsetSandwiches/sand_bacon.webp" alt="Bacon"><span class="tooltip">Bacon</span>
+                </div>
+                <div class="ingredient" data-type="veggie">
+                    <img src="https://raw.githubusercontent.com/BambieStudio/ASSETS-Divers---projets-code-/refs/heads/main/sunsetSandwiches/sand_vege.webp" alt="vegetarien"><span class="tooltip">Veggie</span>
+                </div>
+                <div class="ingredient" data-type="cheese">
+                    <img src="https://raw.githubusercontent.com/BambieStudio/ASSETS-Divers---projets-code-/refs/heads/main/sunsetSandwiches/sand_fromage.webp" alt="Fromage"><span class="tooltip">Fromage</span>
+                </div>
+                <div class="ingredient" data-type="tomato">
+                    <img src="https://raw.githubusercontent.com/BambieStudio/ASSETS-Divers---projets-code-/refs/heads/main/sunsetSandwiches/sand_tomate.webp" alt="Tomate"><span class="tooltip">Tomate</span>
+                </div>
+                <div class="ingredient" data-type="salad">
+                    <img src="https://raw.githubusercontent.com/BambieStudio/ASSETS-Divers---projets-code-/refs/heads/main/sunsetSandwiches/sand_salade.webp" alt="Salade"><span class="tooltip">Salade</span>
+                </div>
+                <div class="ingredient" data-type="mushrooms">
+                    <img src="https://raw.githubusercontent.com/BambieStudio/ASSETS-Divers---projets-code-/refs/heads/main/sunsetSandwiches/sand_champi.webp" alt="Champignons"><span class="tooltip">Champi</span>
+                </div>
+                <div class="ingredient" data-type="cucumber">
+                    <img src="https://raw.githubusercontent.com/BambieStudio/ASSETS-Divers---projets-code-/refs/heads/main/sunsetSandwiches/sand_concombre.webp" alt="Concombre"><span class="tooltip">Concombre</span>
+                </div>
+                <div class="ingredient" data-type="pepper">
+                    <img src="https://raw.githubusercontent.com/BambieStudio/ASSETS-Divers---projets-code-/refs/heads/main/sunsetSandwiches/sand_poivron.webp" alt="Poivron"><span class="tooltip">Poivrons</span>
+                </div>
+                <div class="ingredient" data-type="egg">
+                    <img src="https://raw.githubusercontent.com/BambieStudio/ASSETS-Divers---projets-code-/refs/heads/main/sunsetSandwiches/sand_oeuf.webp" alt="Œuf"><span class="tooltip">Oeuf</span>
+                </div>
+                <div class="ingredient" data-type="bread-top">
+                    <img src="https://raw.githubusercontent.com/BambieStudio/ASSETS-Divers---projets-code-/refs/heads/main/sunsetSandwiches/sand_bunTop.webp" alt="Pain du haut"><span class="tooltip">Pain (haut)</span>
+                </div>
+            </div>
+        </div>
+        
+<!-- ÉCRAN DE FIN DE NIVEAU -->
+<div class="level-complete-screen hidden">
+  <div id="congrats-title" class="congrats-title"></div> 
+
+  <div class="stats-container">
+    <h3>Tes performances</h3>
+    <div class="stat-item">
+      <span>Sandwichs préparés:</span>
+      <span id="sandwich-count">3</span>
+    </div>
+    <div class="stat-item">
+      <span>Clients satisfaits:</span>
+      <span id="client-count">3</span>
+    </div>
+    <div class="stat-item">
+      <span>Pièces gagnées:</span>
+      <span id="coins-earned">40</span>
+    </div>
+  </div>
+
+  <p>Félicitations! Tu as aidé Mario à gagner assez d'argent!</p>
+  <button class="next-level-button">Réparer l'échope</button>
+</div>
+
+  
+    
+<!-- ÉCRAN FINAL -->
+<div class="end-screen hidden">
+  <img class="end-bg" src="https://i.pinimg.com/736x/df/16/a5/df16a5cfd27ad29dfb8beafaff4f9a72.jpg" alt="boutique finale">
+  <div class="shopkeeper-container">
+    <img src="" class="shopkeeper" id="end-mario-img">
+    
+    <div class="dialogue-bubble">
+      <p id="end-text"></p>
+     <button id="end-next-button">➡️</button>
+    </div>
+    
+    <button id="end-replay-btn" class="start-button hidden">Rejouer</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+  
+</body>
+</html>

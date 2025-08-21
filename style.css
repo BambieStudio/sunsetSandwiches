@@ -1,0 +1,784 @@
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Gaegu', cursive;
+            background: url('https://i.pinimg.com/736x/7e/1c/a8/7e1ca804f1d32c44bb73a978865cd2d2.jpg') no-repeat center center;
+            background-size: cover;
+            height: 100vh;
+            overflow: hidden;
+            color: #333;
+        }
+
+.main-background {
+    background: url('https://i.pinimg.com/736x/d8/5f/ec/d85feccf1266e4acd9d0b42f4bba9fe0.jpg') no-repeat center center;
+    background-size: cover;
+}
+.game-container {
+    max-width: 900px;
+    height: 100vh;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* 🔑 colle tout en bas */
+    position: relative;
+    gap: 0; /* supprime les écarts verticaux inutiles */
+}
+.main-game-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* pousse les enfants vers le bas */
+    min-height: 100vh;         /* occupe tout l'écran */
+    position: relative;
+    gap: 0;
+}
+        
+        /* BOUTON SON */
+        .sound-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            border-radius: 50%;
+            padding: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* ÉCRAN D'ACCUEIL */
+.welcome-screen {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    background: 
+        linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+        url('https://example.com/plage-echoppe.jpg') no-repeat center center;
+    background-size: cover;
+    background-blend-mode: darken;
+    padding: 40px 20px;
+    text-align: center;
+    border-radius: 20px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    max-width: 600px;
+    margin: 60px auto;
+    opacity: 0;
+    animation: fadeIn 0.8s ease forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+        
+        .game-title {
+            font-family: 'Delius Swash Caps', cursive;
+            font-size: 3.5rem;
+            color: #ffde82;
+            text-shadow: 3px 3px 0 #FFF, 
+                        -1px -1px 0 #FFF, 
+                        1px -1px 0 #FFF, 
+                        -1px 1px 0 #FFF;
+            margin-bottom: 20px;
+        }
+        
+.welcome-screen h1 {
+  color: #ffde82;
+  
+}
+
+        .start-button {
+            background: #ffde82;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-family: 'Gaegu', cursive;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+        }
+        
+        .start-button:hover {
+            transform: scale(1.05);
+            background: #f7ce59;
+        }
+        
+        /* ÉCRAN D'INTRODUCTION */
+.intro-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  color: white;
+  padding: 20px;
+}
+
+.shopkeeper-container {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  max-width: 500px;
+}
+
+.shopkeeper {
+  width: 250px;
+  height: auto;
+  margin-bottom: -20px;
+}
+
+.dialogue-bubble {
+  background: white;
+  color: #333;
+  padding: 20px 20px 20px 20px;
+  border-radius: 20px;
+  max-width: 400px;
+  font-size: 1.2rem;
+  text-align: left;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  height: 120px;
+  width: 400px;
+}
+
+.dialogue-bubble:after {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 0 20px 20px;
+  border-style: solid;
+  border-color: transparent transparent white;
+}
+
+#next-button, #end-next-button {
+  align-self: flex-end;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  animation: pulse 1s infinite;
+}
+
+        
+        /* ÉCRAN DE JEU PRINCIPAL */
+.main-game-screen {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    gap: 0;
+}
+        
+        /* COMPTEUR DE PIÈCES */
+.money-display {
+    position: absolute;
+    top: 2vh;
+    left: 2vw;
+    padding: 10px 20px;
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    z-index: 100;
+    color: #fff;
+    font-weight: bold;
+    background: radial-gradient(circle at 30% 30%, #ffde82, #f7ce59);
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 60px;
+}
+
+@keyframes moneyGlow {
+    0% {
+      box-shadow: 0 0 5px #FFD700, 0 0 10px #FFD700, 0 0 15px #FFA500;
+        text-shadow: 0 0 5px #FFD700, 0 0 10px #FFD700, 0 0 15px #FFA500;
+        transform: scale(1);
+    }
+    50% {
+      box-shadow: 0 0 15px #FFD700, 0 0 25px #FFD700, 0 0 35px #FFA500;
+        text-shadow: 0 0 15px #FFD700, 0 0 25px #FFD700, 0 0 35px #FFA500;
+        transform: scale(1.3);
+    }
+    100% {
+       box-shadow: 0 0 5px #FFD700, 0 0 10px #FFD700, 0 0 15px #FFA500;
+        text-shadow: 0 0 5px #FFD700, 0 0 10px #FFD700, 0 0 15px #FFA500;
+        transform: scale(1);
+    }
+}
+
+.money-glow {
+    animation: moneyGlow 0.8s ease-in-out forwards;
+}
+
+/* ZONE DES CLIENTS */
+.customers-area {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.customer {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: 2vw;
+  min-width: 150px;
+     margin-bottom: -10px;
+}
+
+.customer-img img {
+    width: 80vw;  
+    max-width: 350px; 
+    min-width: 200px;
+    height: auto;
+    object-fit: contain;
+}
+
+.order-bubble {
+    background: #FFF8E1;
+    padding: 4vh 4vw;
+    border-radius: 15px;
+    min-height: 12vh;
+    width: 35vw;
+    max-width: 300px;
+    min-width: 180px;
+  font-size: clamp(1rem, 3vw, 1rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    position: relative;
+}
+
+.order-bubble:after {
+    content: '';
+    position: absolute;
+    right: -15px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-width: 10px 0 10px 15px;
+    border-style: solid;
+    border-color: transparent transparent transparent #FFF8E1;
+}
+
+.customer-img{
+  position: relative;
+}
+
+.customer-emoji span {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2rem;
+    z-index: 10; 
+    pointer-events: none; 
+}
+
+
+/* ZONE DE PRÉPARATION RESPONSIVE */
+.preparation-area {
+    background-image: url('https://raw.githubusercontent.com/BambieStudio/ASSETS-Divers---projets-code-/refs/heads/main/sunsetSandwiches/table_bois.webp');
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 20vh;
+    min-height: 120px;
+    display: flex;
+    justify-content: space-evenly;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+    padding: 0 5vw;
+    border-radius: 15px 15px 0 0;
+        margin-top: 0;
+align-items: center;
+}
+
+.plate {
+    width: 18vw;
+    max-width: 110px;
+    min-width: 70px;
+    height: 18vw;
+    max-height: 110px;
+    min-height: 70px;
+    background-image: url('https://raw.githubusercontent.com/BambieStudio/ASSETS-Divers---projets-code-/refs/heads/main/sunsetSandwiches/plate.webp');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    overflow: visible;
+}
+        
+
+/* INGRÉDIENTS RESPONSIVE */
+.ingredients-panel {
+    position: relative;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 1.5vh 2vw;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.2);
+    gap: 1.5vw;
+    overflow-x: auto;
+    margin: 0;
+}
+
+.ingredient {
+    width: 12vw;          
+    max-width: 70px;      
+    min-width: 50px;      
+    height: 12vw;         
+    max-height: 70px;     
+    min-height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+    background: #FFF;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    flex-shrink: 0;
+}
+
+.ingredient img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 8px;
+}
+
+.ingredient:hover {
+    transform: scale(1.1);
+}
+        
+/* BOUTONS D'ACTION */
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5vh;
+}
+
+.serve-button, .reset-button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-family: 'Gaegu', cursive;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    transition: all 0.3s;
+    padding: 1.5vh 3vw;
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    border-radius: 25px;
+}
+
+.reset-button {
+    background: #e8968b;
+}
+
+.serve-button{
+  background: #6dc780;
+}
+
+.serve-button:hover, .reset-button:hover {
+    transform: scale(1.05);
+}
+
+.serve-button:hover {
+    background: #5ba66b;
+}
+
+.reset-button:hover {
+    background: #db6b5c;
+}
+        
+        /* ÉCRAN DE FIN DE NIVEAU */
+        .level-complete-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 200;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .congrats-title {
+            font-family: 'Delius Swash Caps', cursive;
+            font-size: 1.3rem;
+            color: #ffde82;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+.congrats-img {
+  width: 50px;
+  margin: 10px;
+  animation: pop 0.5s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.5); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+        
+        .stats-container {
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            width: 80%;
+            max-width: 400px;
+        }
+        
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+        }
+        
+        .next-level-button {
+            background: #6dc780;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-family: 'Gaegu', cursive;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            margin-top: 20px;
+        }
+
+        .next-level-button:hover {
+            transform: scale(1.05);
+            background: #4CAF50;
+        } 
+        .hidden {
+            display: none !important;
+        }
+
+/* TOOLTIPS POUR LES INGRÉDIENTS */
+.ingredient {
+    position: relative; /* Nécessaire pour le positionnement absolu des tooltips */
+}
+
+.ingredient .tooltip {
+    visibility: hidden;
+    background-color: #fff;
+    color: #000;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 10px;
+    position: absolute;
+    z-index: 1;
+    bottom: 65%; /* Au-dessus de l'ingrédient */
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 0.8rem;
+    white-space: nowrap;
+}
+
+.tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #fff transparent transparent transparent;
+}
+
+.ingredient:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+
+/*changer les fond d'écrans en fonction des niveaux*/
+body.level-1 {
+    background: url('https://i.pinimg.com/736x/d8/5f/ec/d85feccf1266e4acd9d0b42f4bba9fe0.jpg') no-repeat center/cover;
+}
+
+body.level-2 {
+    background: url('https://i.pinimg.com/736x/dc/7c/6c/dc7c6c82d1181a42c2cf6d7d5ad42772.jpg') no-repeat center/cover;
+}
+
+body.level-3 {
+    background: url('https://i.pinimg.com/736x/dd/e3/0d/dde30de8bf6ce8a39049c87dde8ca402.jpg') no-repeat center/cover;
+}
+
+
+/*renovation intermission boutique*/ 
+.intermission-screen {
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.9);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:500;
+  flex-direction:column;
+  color:white;
+  padding: 2rem;
+}
+
+.intermission-content { 
+text-align: center;
+  width: 100%;
+  max-width: 600px;
+}
+
+.intermission-video {
+  width:50vw;
+  max-width:550px;
+    max-height: 80vh;
+  margin-bottom:2rem;
+}
+
+.continue-button {
+  display: block; 
+  margin: 0 auto;
+  background:#ffde82;
+  border:none;
+  color:#fff;
+  padding:15px 35px;
+  border-radius:30px;
+  font-size:1.3rem;
+  cursor:pointer;
+  box-shadow:0 6px 12px rgba(0,0,0,0.4);
+}
+
+/*ecran final*/
+.end-screen{
+  position:absolute; inset:0; z-index:600;
+  display:flex; justify-content:center; align-items:center;
+}
+
+.end-bg{
+  position:fixed; inset:0; width:100%; height:100%;
+  object-fit:cover;
+}
+
+.end-dialogue{
+  position:relative; z-index:2; display:flex; flex-direction:column; align-items:center;
+}
+
+.end-mario{
+  width:260px;
+}
+
+.bubble{
+  background:white; padding:20px; border-radius:20px;
+  max-width:380px; text-align:left; box-shadow:0 4px 14px rgba(0,0,0,0.3);
+  font-size:1.2rem; margin-top:-20px;
+  position:relative;
+}
+
+.bubble::after{
+  content:""; position:absolute; top:-20px; left:50%; transform:translateX(-50%);
+  border-width:0 20px 20px; border-style:solid;
+  border-color:transparent transparent white transparent;
+}
+
+#end-next, #replay-btn{
+  margin-top:20px;
+  background:#FFA500; color:white; border:none;
+  padding:10px 25px; border-radius:20px; cursor:pointer;
+  font-size:1.2rem;
+}
+
+.hidden{display:none!important;}
+
+
+/* ÉCRAN FINAL */
+.end-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  color: white;
+  padding: 20px;
+}
+
+.end-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.end-dialogue {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  max-width: 500px;
+}
+
+.end-mario {
+  width: 250px;
+  height: auto;
+  margin-bottom: -20px;
+}
+
+.end-dialogue .bubble {
+  background: white;
+  color: #333;
+  padding: 20px;
+  border-radius: 20px;
+  max-width: 400px;
+  font-size: 1.2rem;
+  text-align: left;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  min-height: 120px;
+  width: 400px;
+}
+
+.end-dialogue .bubble:after {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 0 20px 20px;
+  border-style: solid;
+  border-color: transparent transparent white;
+}
+
+#replay-btn {
+  padding: 10px 20px;
+  background: #FF6B6B;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  font-family: 'Gaegu', cursive;
+}
+
+#replay-btn:hover {
+  background: #FF5252;
+  transform: scale(1.05);
+}
+
+
+
+/* 📱 RESPONSIVE*/ 
+
+@media (max-width: 768px) {
+    body, .main-background {
+        background-position: top center;
+    }
+   .welcome-screen {
+        width: 90%;
+        padding: 20px 15px;
+    }
+    .game-title {
+        font-size: 2.5rem;
+    }
+    .start-button {
+        font-size: 1.2rem;
+        padding: 12px 25px;
+    }
+    .customer-img img {
+        width: 90vw;
+        max-width: 180px;
+    }
+    .order-bubble {
+        width: 60vw;
+        min-width: auto;
+        max-width: 250px;
+        font-size: 1rem;
+    }
+.plate {
+        width: 25vw;
+        height: 25vw;
+        max-width: 90px;
+        max-height: 90px;
+    }
+    .ingredient {
+        width: 14vw;          
+        height: 14vw;         
+        max-width: 55px;      
+        max-height: 55px;    
+    }
+    .serve-button, .reset-button {
+        font-size: 1rem;
+        padding: 1vh 2vw;
+    }
+        .intermission-video {
+        width: 90vw;
+          max-height: 60vh;
+    }
+    .end-dialogue {
+        width: 90%;
+        padding: 20px;
+    }
+    .end-dialogue .bubble {
+        width: 90%;
+        min-height: auto;
+        font-size: 1rem;
+    }
+}
