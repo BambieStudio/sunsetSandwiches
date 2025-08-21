@@ -356,11 +356,15 @@ function serveSandwich() {
     
     money += earnings;
     updateMoneyDisplay(earnings);
-    //son quand cash augmente 
-if (soundEnabled && cashSound) {
-  cashSound.currentTime = 0; // remet au début
-  cashSound.play();
-}
+    // 🎵 Gestion des sons selon le résultat
+    if (earnings > 0) {
+        if (soundEnabled && cashSound) {
+            cashSound.currentTime = 0;
+            cashSound.play();
+        }
+    } else {
+        jouerSonDecu(); // 😠 Son de déception si earnings ≤ 0
+    }
     showCustomerReaction(score, earnings);
     
     // Réinitialiser pour la prochaine commande
@@ -372,7 +376,18 @@ if (soundEnabled && cashSound) {
     }, 2000);
 }
 
+const sfxDecu = document.getElementById("sfx-decu");
+
+function jouerSonDecu() {
+  if (soundEnabled) {
+    sfxDecu.currentTime = 0;
+    sfxDecu.play();
+  }
+}
+
+
 // Vérifier la commande
+
 function checkOrder() {
     if (currentSandwich.length !== currentOrder.length) {
         return 0;
@@ -395,7 +410,7 @@ function floatEmojis(parent, emoji, count = 7) {
         el.textContent = emoji;
         el.style.position = 'absolute';
         el.style.left = '50%';
-        el.style.top = '50%'; // 🔥 départ plus bas
+        el.style.top = '50%'; 
         el.style.fontSize = `${Math.random() * 24 + 20}px`;
         el.style.transform = `translateX(-50%) rotate(${Math.random()*360}deg)`;
         el.style.opacity = 1;
@@ -422,11 +437,14 @@ function floatEmojis(parent, emoji, count = 7) {
 function showCustomerReaction(earnings) {
     const emojiEl = document.getElementById('customer-emoji');
 
-    // Choix de l'emoji
-    const emoji = earnings > 0 ? '😍' : '😠';
-
-    // On fait flotter plusieurs emojis
-    floatEmojis(emojiEl, emoji, 7);
+    if (earnings > 0) {
+        // 😍 Client content : cœurs + pièces
+        floatEmojis(emojiEl, '😍', 5);
+        floatEmojis(emojiEl, '🪙', 5); 
+    } else {
+        // 😠 Client pas content
+        floatEmojis(emojiEl, '😠', 7);
+    }
 }
 
 // Helper functions
