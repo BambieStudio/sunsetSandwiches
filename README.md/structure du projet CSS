@@ -1,0 +1,93 @@
+/* style.css */
+/* ===== VARIABLES ===== */
+:root {
+    --primary-color: #ffde82;
+    --secondary-color: #6dc780;
+    --accent-color: #e8968b;
+    --text-color: #333;
+    --background-color: #fff;
+    --shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* ===== RÉINITIALISATION ===== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Gaegu', cursive;
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    color: var(--text-color);
+}
+
+/* ===== CONTENEUR PRINCIPAL ===== */
+.game-container {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    min-height: 100vh;
+}
+
+/* ===== ÉCRANS ===== */
+.welcome-screen,
+.intro-screen,
+.main-game-screen,
+.intermission-screen,
+.level-complete-screen,
+.end-game-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
+}
+
+/* ===== BOUTONS ===== */
+button {
+    font-family: 'Gaegu', cursive;
+    cursor: pointer;
+    border: none;
+    border-radius: 30px;
+    padding: 12px 24px;
+    font-size: 1.2rem;
+    box-shadow: var(--shadow);
+    transition: all 0.3s;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+.start-button {
+    background: var(--primary-color);
+}
+
+.primary-action-button {
+    background: var(--secondary-color);
+    color: white;
+}
+
+.secondary-action-button {
+    background: var(--accent-color);
+    color: white;
+}
+
+/* ===== CLASSES UTILITAIRES ===== */
+.hidden {
+    display: none !important;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    /* Styles mobiles */
+}
