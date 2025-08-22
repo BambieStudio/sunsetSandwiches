@@ -1,0 +1,132 @@
+// script.js
+// ===== CONFIGURATION =====
+const CONFIG = {
+    levels: 3,
+    goalScore: 40,
+    // Autres configurations
+};
+
+// ===== ÉTAT DU JEU =====
+let gameState = {
+    currentLevel: 1,
+    score: 0,
+    timeElapsed: 0,
+    soundEnabled: true,
+    // Autres propriétés d'état
+};
+
+// ===== RÉFÉRENCES DOM =====
+const domElements = {
+    welcomeScreen: null,
+    introScreen: null,
+    mainGameScreen: null,
+    // autres références
+};
+
+// ===== INITIALISATION =====
+function initGame() {
+    cacheDOMElements();
+    bindEvents();
+    initAudio();
+    showWelcomeScreen();
+}
+
+function cacheDOMElements() {
+    domElements.welcomeScreen = document.querySelector('.welcome-screen');
+    domElements.introScreen = document.querySelector('.intro-screen');
+    // autres éléments
+}
+
+function bindEvents() {
+    document.querySelector('.start-button').addEventListener('click', startIntro);
+    document.querySelector('.start-game-button').addEventListener('click', startGame);
+    // autres événements
+}
+
+function initAudio() {
+    // Initialisation audio
+}
+
+// ===== GESTION DES ÉCRANS =====
+function showWelcomeScreen() {
+    hideAllScreens();
+    domElements.welcomeScreen.classList.remove('hidden');
+}
+
+function startIntro() {
+    hideAllScreens();
+    domElements.introScreen.classList.remove('hidden');
+    // Initialiser le dialogue
+}
+
+function startGame() {
+    hideAllScreens();
+    domElements.mainGameScreen.classList.remove('hidden');
+    setupLevel(gameState.currentLevel);
+    startTimer();
+}
+
+function showIntermission() {
+    // Afficher l'écran de transition
+}
+
+function showLevelComplete() {
+    // Afficher l'écran de fin de niveau
+}
+
+function showEndGame() {
+    // Afficher l'écran de fin de jeu
+}
+
+function hideAllScreens() {
+    document.querySelectorAll('.game-container > div').forEach(screen => {
+        screen.classList.add('hidden');
+    });
+}
+
+// ===== LOGIQUE DE JEU =====
+function setupLevel(level) {
+    // Configurer le niveau selon sa difficulté
+}
+
+function checkWinCondition() {
+    // Vérifier si le joueur a gagné
+}
+
+function calculateScore() {
+    // Calculer le score basé sur la performance
+}
+
+// ===== GESTION DU TEMPS =====
+function startTimer() {
+    // Démarrer le chronomètre
+}
+
+function stopTimer() {
+    // Arrêter le chronomètre
+}
+
+function updateTimer() {
+    // Mettre à jour l'affichage du temps
+}
+
+// ===== AUDIO =====
+function playSound(soundId) {
+    // Jouer un son spécifique
+}
+
+function toggleSound() {
+    // Activer/désactiver le son
+}
+
+// ===== UTILITAIRES =====
+function getRandomItem(array) {
+    return array[Math.floor(Math.random() * array.length)];
+}
+
+function animateElement(element, animation) {
+    // Appliquer une animation à un élément
+}
+
+// ===== LANCEMENT DU JEU =====
+document.addEventListener('DOMContentLoaded', initGame);
