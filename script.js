@@ -6,6 +6,10 @@ const moneyGoal = 40;
 let currentLevel = 1;
 let soundEnabled = true;
 let musicInitialized = false;
+let startTime = 0;
+let elapsedTime = 0;
+let timerInterval = null;
+let isTimerRunning = false;
 
 // GIf de rénovation 
 const intermissionVideos = {
@@ -105,7 +109,7 @@ let currentCustomerIndex = 0;
 let plate, serveButton, moneyCounter, resetButton, orderText;
 
 
-//changezr les fond en fonction des niveau 
+//changer les fond en fonction des niveau 
 function updateBackground() {
     document.body.classList.remove('level-1', 'level-2', 'level-3');
     document.body.classList.add(`level-${currentLevel}`);
@@ -118,6 +122,9 @@ function initGame() {
     plate = document.getElementById('sandwich-building-area');
     changeCustomer()
     updateBackground();
+      
+    // S'assurer que le chronomètre est réinitialisé
+    resetTimer();
 
     // Changer le fond d’écran
     document.body.classList.add('main-background');
@@ -186,8 +193,32 @@ nextBtn.addEventListener('click', () => {
 // Lancer le premier dialogue
 showDialogue(currentDialogue);
 
+//CHRONO 
+function startTimer() {
+    if (!isTimerRunning) {
+        startTime = Date.now() - elapsedTime;
+        timerInterval = setInterval(function() {
+            elapsedTime = Date.now() - startTime;
+            document.getElementById("time-counter").textContent = Math.floor(elapsedTime / 1000);
+        }, 100);
+        isTimerRunning = true;
+    }
+}
+function stopTimer() {
+    if (isTimerRunning) {
+        clearInterval(timerInterval);
+        isTimerRunning = false;
+    }
+}
+function resetTimer() {
+    stopTimer();
+    elapsedTime = 0;
+    document.getElementById("time-counter").textContent = "0";
+    isTimerRunning = false;
+}
 
-// Configuration du drag & drop - CORRIGÉ
+
+// Configuration du  clique sur les ingrédients
 function setupIngredientDrag() {
     const ingredients = document.querySelectorAll('.ingredient');
     
@@ -225,6 +256,11 @@ function filterIngredientsByLevel() {
 function addIngredientToSandwich(type) {
     currentSandwich.push(type);
     updateSandwichVisual();
+    
+    // Démarrer le chronomètre au premier ingrédient
+    if (currentSandwich.length === 1 && !isTimerRunning) {
+        startTimer();
+    }
     
     // Animation de l'ingrédient
     const ingredientElement = document.querySelector(`[data-type="${type}"]`);
@@ -332,6 +368,11 @@ function updateMoneyDisplay(gain = 0) {
     if (gain > 0) {
         const display = document.querySelector('.money-display');
         display.classList.add('money-glow');
+        
+        // Arrêter le chronomètre quand on atteint 40 pièces
+        if (money >= moneyGoal) {
+            stopTimer();
+        }
 
         // Supprime la classe après l'animation pour pouvoir la rejouer
         setTimeout(() => display.classList.remove('money-glow'), 800);
@@ -339,8 +380,6 @@ function updateMoneyDisplay(gain = 0) {
 
     if (money >= moneyGoal) showLevelComplete();
 }
-
-
 
 function changeCustomer() {
     let newIndex;
@@ -540,6 +579,7 @@ function highlightNewIngredients() {
 function nextLevel() {
   currentLevel++;
   money = 0;
+  resetTimer(); // Réinitialiser le chronomètre pour le nouveau niveau
   updateMoneyDisplay();
 
   if (currentLevel > 3) {
@@ -551,24 +591,33 @@ function nextLevel() {
 }
 
 function showLevelComplete() {
-  document.querySelector('.level-complete-screen').classList.remove('hidden');
+    document.querySelector('.level-complete-screen').classList.remove('hidden');
+    
+    // Afficher le temps écoulé dans les statistiques
+    document.getElementById("time-elapsed").textContent = Math.floor(elapsedTime / 1000) + "s";
+    
+    // Injecter le contenu personnalisé selon le niveau
+    document.getElementById("congrats-title").innerHTML = getCongratsContent(currentLevel);
 
-  // Injecter le contenu personnalisé selon le niveau
-  document.getElementById("congrats-title").innerHTML = getCongratsContent(currentLevel);
-
-  // Quand on clique “Niveau Suivant” → bascule vers l’écran intermission
-  document.querySelector('.next-level-button').onclick = () => {
-    document.querySelector('.level-complete-screen').classList.add('hidden');
-    showIntermission();
-  };
+    // Quand on clique "Niveau Suivant" → bascule vers l'écran intermission
+    document.querySelector('.next-level-button').onclick = () => {
+        document.querySelector('.level-complete-screen').classList.add('hidden');
+        showIntermission();
+    };
 }
+
 
 
 // Fonction pour recommencer le sandwich
 function resetSandwich() {
-    currentSandwich = [];
-    updateSandwichVisual();
-    showMessage('Sandwich réinitialisé!', 'info');
+    if (currentSandwich.length > 0) {
+        // Supprimer seulement le dernier ingrédient
+        currentSandwich.pop();
+        updateSandwichVisual();
+        showMessage('Dernier ingrédient retiré!', 'info');
+    } else {
+        showMessage('Le sandwich est déjà vide!', 'error');
+    }
 }
 
 // Gestion de la navigation entre les écrans
