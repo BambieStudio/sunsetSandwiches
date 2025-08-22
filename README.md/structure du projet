@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Template Jeu</title>
+    
+    <!-- POLICES -->
+    <link href="https://fonts.googleapis.com/css2?family=Delius+Swash+Caps&family=Gaegu&display=swap" rel="stylesheet">
+    
+    <!-- STYLES -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <!-- ÉCRAN D'ACCUEIL -->
+        <div class="welcome-screen">
+            <h1>NOM DU JEU</h1>
+            <p>Description du jeu</p>
+            <button class="start-button">Commencer</button>
+        </div>
+        
+        <!-- ÉCRAN D'INTRODUCTION/DIALOGUE -->
+        <div class="intro-screen hidden">
+            <div class="character-container">
+                <img src="" alt="Personnage" class="character-img">
+                <div class="dialogue-bubble">
+                    <p id="dialogue-text"></p>
+                    <button id="next-dialogue-button">➡️</button>
+                </div>
+                <button class="start-game-button hidden">C'est parti!</button>
+            </div>
+        </div>
+        
+        <!-- ÉCRAN DE JEU PRINCIPAL -->
+        <div class="main-game-screen hidden">
+            <!-- EN-TÊTE DU JEU (scores, timers, etc.) -->
+            <div class="game-header">
+                <div class="score-display">
+                    <span>Score: </span>
+                    <span id="score-counter">0</span>
+                </div>
+                <div class="time-display">
+                    <span>Temps: </span>
+                    <span id="time-counter">0</span>s
+                </div>
+                <button class="sound-toggle">🔊</button>
+            </div>
+            
+            <!-- ZONE DE JEU PRINCIPALE -->
+            <div class="game-board" id="game-board">
+                <!-- Contenu dynamique du jeu -->
+            </div>
+            
+            <!-- CONTRÔLES/INTERACTIONS -->
+            <div class="game-controls">
+                <div class="actions-panel">
+                    <!-- Éléments interactifs -->
+                </div>
+                <div class="action-buttons">
+                    <button class="primary-action-button">Action</button>
+                    <button class="secondary-action-button">Reset</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ÉCRAN INTERMISSION/TRANSITION -->
+        <div class="intermission-screen hidden">
+            <div class="intermission-content">
+                <p>Message de transition</p>
+                <img class="transition-media" src="" alt="Média transition">
+                <button class="continue-button">Continuer</button>
+            </div>
+        </div>
+        
+        <!-- ÉCRAN DE FIN DE NIVEAU -->
+        <div class="level-complete-screen hidden">
+            <div class="congrats-container">
+                <h2>Niveau Réussi!</h2>
+                <div class="stats-container">
+                    <!-- Statistiques de performance -->
+                </div>
+                <button class="next-level-button">Niveau Suivant</button>
+            </div>
+        </div>
+        
+        <!-- ÉCRAN DE FIN DE JEU -->
+        <div class="end-game-screen hidden">
+            <div class="end-content">
+                <h2>Félicitations!</h2>
+                <p>Message de fin</p>
+                <button class="replay-button">Rejouer</button>
+            </div>
+        </div>
+        
+        <!-- AUDIO -->
+        <audio id="background-music" loop>
+            <source src="" type="audio/mpeg">
+        </audio>
+        <audio id="sfx-correct">
+            <source src="" type="audio/mpeg">
+        </audio>
+        <audio id="sfx-error">
+            <source src="" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
