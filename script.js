@@ -1,9 +1,9 @@
 // Variables globales
 let currentOrder = [];
 let currentSandwich = [];
-let money = 40;
+let money = 0;
 const moneyGoal = 40;
-let currentLevel = 3;
+let currentLevel = 1;
 let soundEnabled = true;
 let musicInitialized = false;
 
