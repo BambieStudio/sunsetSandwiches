@@ -1,11 +1,26 @@
 // Variables globales
 let currentOrder = [];
 let currentSandwich = [];
-let money = 0;
+let money = 40;
 const moneyGoal = 40;
-let currentLevel = 1;
+let currentLevel = 3;
 let soundEnabled = true;
 let musicInitialized = false;
+
+// GIf de rénovation 
+const intermissionVideos = {
+  1: "https://github.com/BambieStudio/ASSETS-Divers---projets-code-/blob/main/sunsetSandwiches/renov1.gif?raw=true",
+  2: "https://github.com/BambieStudio/ASSETS-Divers---projets-code-/blob/main/sunsetSandwiches/renov2.gif?raw=true",
+  3: "https://github.com/BambieStudio/ASSETS-Divers---projets-code-/blob/main/sunsetSandwiches/renov3.gif?raw=true"
+};
+
+// 2️ Précharger les GIFs
+const preloadedGIFs = {};
+for (let level in intermissionVideos) {
+  const img = new Image();
+  img.src = intermissionVideos[level];
+  preloadedGIFs[level] = img;
+}
 
          // Éléments audio
         const musicSandwich = document.getElementById("music-sandwich");
@@ -54,11 +69,6 @@ let musicInitialized = false;
             });
         });
 
-const intermissionVideos = {
-  1: "https://github.com/BambieStudio/ASSETS-Divers---projets-code-/raw/refs/heads/main/sunsetSandwiches/niveau2.mp4",
-  2: "https://github.com/BambieStudio/ASSETS-Divers---projets-code-/raw/refs/heads/main/sunsetSandwiches/niveau3.mp4",
-  3: "https://github.com/BambieStudio/ASSETS-Divers---projets-code-/raw/refs/heads/main/sunsetSandwiches/niveau4.mp4"
-};
 // Liste des ingrédients possibles par niveau
 const ingredientsByLevel = {
   1: ['bread-bottom', 'ketchup', 'mayo', 'ham', 'cheese', 'tomato', 'salad', 'bread-top'],
@@ -472,22 +482,20 @@ function showMessage(text, type) {
     console.log(`${type}: ${text}`);
 }
 
-//montrer la rénovation entre chaque niveau 
+// Afficher la renov entre chaque niveaux
 function showIntermission() {
   const interScreen = document.querySelector('.intermission-screen');
-  const videoEl = interScreen.querySelector('.intermission-video');
-  interScreen.classList.remove('hidden');
+  const gifEl = interScreen.querySelector('.intermission-video');
 
-  // Définir la vidéo selon le niveau
-  videoEl.src = intermissionVideos[currentLevel] || "";
-  videoEl.currentTime = 0;
-  videoEl.play();
+  gifEl.src = preloadedGIFs[currentLevel]?.src || "";
+  interScreen.classList.remove('hidden');
 
   interScreen.querySelector('.continue-button').onclick = () => {
     interScreen.classList.add('hidden');
     nextLevel();
   };
 }
+
 
 //persaonnaliser message a chaque niveaux 
 function getCongratsContent(level) {
@@ -523,7 +531,7 @@ function highlightNewIngredients() {
       
       setTimeout(() => {
         ingredientEl.classList.remove('money-glow');
-      }, 1000);
+      }, 1500);
     }
   });
 }
@@ -590,7 +598,7 @@ function showEndScreen(){
   let currentEndDialogue = 0;
   const endDialogues = [
     { text: "Merci pour ton aide ! La boutique a fière allure ❤️", img: "https://raw.githubusercontent.com/BambieStudio/ASSETS-Divers---projets-code-/refs/heads/main/sunsetSandwiches/mario_surpris.webp" },
-    { text: "Reviens l'été prochain ! Tu es toujours le bienvenu chez Sunset Sandwiches, mon petit.", img: "https://raw.githubusercontent.com/BambieStudio/ASSETS-Divers---projets-code-/refs/heads/main/sunsetSandwiches/mario_superheureux.webp" }
+    { text: "Reviens vite ! Tu es maintenant chez toi à Sunset Sandwiches, mon petit.", img: "https://raw.githubusercontent.com/BambieStudio/ASSETS-Divers---projets-code-/refs/heads/main/sunsetSandwiches/mario_superheureux.webp" }
   ];
 
   function showEndDialogue(index) {
